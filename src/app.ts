@@ -15,16 +15,18 @@ app.listen(port, async () => {
 	await migrate.latest()
 	await seed.run()
 	console.log('All migrations and seeds have been run')
+	
+	const currentDate = new Date().toLocaleDateString('en-CA') // тоже дает ГГГГ-ММ-ДД
 
-	const date = '2025-09-27'
+	console.log(`Fetching tariffs for date: ${currentDate}`)
 
-	fetchTariffs(date)
+	fetchTariffs(currentDate)
 		.then((data) => {
-			saveTariffs(data.response, date)
+			saveTariffs(data.response, currentDate)
 				.then((result) => console.log('saveTariffs success'))
 				.catch((e) => console.error('saveTariffs', e))
 		})
 		.catch((e) => console.error('fetchTariffs', e))
 
-	console.log(`App listening on port ${port} on ${new Date().toLocaleString()}`)
+	console.log(`App listening on port ${port} at ${new Date().toLocaleString()}`)
 })
