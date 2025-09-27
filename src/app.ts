@@ -14,9 +14,12 @@ app.get('/health', (req, res) => {
 
 // for check in browser
 app.get('/tariffs', (req, res) => {
-	const currentDate = new Date().toLocaleDateString('en-CA')
-	fetchTariffs(currentDate)
+	const queryDate = req.query?.date ? req.query.date.toString() : new Date().toLocaleDateString('en-CA')
+	fetchTariffs(queryDate)
 		.then((data) => {
+			saveTariffs(data.response, queryDate)
+				.then(() => console.log('saveTariffs success'))
+				.catch((e) => console.error('saveTariffs', e))
 			res.json(data)
 		})
 		.catch((e) => console.error('fetchTariffs', e))
@@ -27,10 +30,10 @@ app.listen(port, async () => {
 	await seed.run()
 	console.log('All migrations and seeds have been run')
 
-	// // fetch on start app
-	// fetchTariffsHandler()
-	// // Plan a fetching tariffs function
-	// plan(fetchTariffsHandler)
+	// fetch on start app
+	fetchTariffsHandler()
+	// Plan a fetching tariffs function
+	plan(fetchTariffsHandler)
 
 	console.log(`App listening on port ${port} at ${new Date().toLocaleString()}`)
 })
