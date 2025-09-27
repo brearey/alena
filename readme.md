@@ -52,3 +52,25 @@ docker compose up --build
 ```
 
 PS: С наилучшими пожеланиями!
+
+## Lorriant notes
+
+#### Rebuild app
+
+```bash
+sudo docker compose down -v app && sudo docker compose up -d --build app
+```
+
+#### Rerun migrates
+
+```bash
+npm run knex:dev migrate down
+npm run knex:dev migrate latest
+```
+
+#### App logs
+
+```bash
+sudo docker logs app
+```
+

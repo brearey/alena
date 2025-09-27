@@ -1,4 +1,4 @@
-import env from '../config/env/env.js'
+import env from '#config/env/env.js'
 
 export async function fetchTariffs(date: string) {
 	const url = `https://common-api.wildberries.ru/api/v1/tariffs/box?date=${date}`

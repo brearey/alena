@@ -16,7 +16,8 @@ export async function up(knex) {
     table.decimal('box_storage_liter', 10, 2).comment('Хранение в день, дополнительный литр, ₽');
     table.string('geo_name').notNullable().comment('Страна, для РФ — округ');
     table.string('warehouse_name').notNullable().comment('Название склада');
-
+		
+    table.string('tariff_date').comment('Дата запроса тарифа в формате ГГГГ-ММ-ДД');
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
     table.index(['warehouse_name']);
