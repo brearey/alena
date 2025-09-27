@@ -1,9 +1,11 @@
 {
     "plugins": ["prettier-plugin-jsdoc"],
-    "tabWidth": 4,
-    "printWidth": 160,
-    "singleQuote": false,
-    "trailingComma": "all",
+    "tabWidth": 2,
+		"useTabs": true,
+		"semi": false,
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "es5",
     "singleAttributePerLine": false,
     "quoteProps": "preserve",
     "bracketSpacing": true

@@ -15,7 +15,7 @@
         
         "tsc:check": "tsc --allowJs --noEmit",
         "prettier": "prettier --config .prettierrc.json src/**/*.js --check",
-        "prettier-format": "prettier --config .prettierrc.json src/**/*.js --write",
+        "prettier-format": "prettier --config .prettierrc.json src/**/*.js src/**/*.ts --write",
         "eslint": "eslint",
         "eslint-fix": "eslint --fix"
     },
