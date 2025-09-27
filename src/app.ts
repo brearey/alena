@@ -1,10 +1,10 @@
 import { migrate, seed } from '#postgres/knex.js'
 import express from 'express'
 import env from './config/env/env.js'
-import { fetchTariffs } from './services/tariffs-service.js'
+import { fetchTariffs } from '#services/tariffs-service.js'
+import { readSpreadsheet } from '#services/sheets-service.js'
 import { saveTariffs } from '#models/tariff-model.js'
 import { plan } from '#utils/scheduler.js'
-import { getRange } from '#services/sheets-service.js'
 
 const app = express()
 const port = env.APP_PORT
@@ -27,11 +27,11 @@ app.get('/tariffs', (req, res) => {
 })
 
 app.get('/sheets', (req, res) => {
-	getRange(env.SPREADSHEET_ID, null)
+	readSpreadsheet(env.SPREADSHEET_ID)
 		.then((result) => {
 			res.json(result)
 		})
-		.catch(e => console.error('getRange', e))
+		.catch(e => console.error('readSpreadsheet', e))
 })
 
 app.listen(port, async () => {

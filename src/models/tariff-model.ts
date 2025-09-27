@@ -83,3 +83,25 @@ export async function saveTariffs(
 		await trx(tableName).insert(tariffsToInsert)
 	})
 }
+
+export async function getSortedTariffs(tariffDate: string): Promise<any[]> {
+	return await knexClient(tableName)
+		.select(
+			'warehouse_name',
+			'geo_name',
+			'box_delivery_base',
+			'box_delivery_liter',
+			'box_delivery_coef_expr',
+			'box_delivery_marketplace_base',
+			'box_delivery_marketplace_liter',
+			'box_delivery_marketplace_coef_expr',
+			'box_storage_base',
+			'box_storage_liter',
+			'box_storage_coef_expr',
+			'dt_next_box',
+			'dt_till_max',
+			'tariff_date'
+		)
+		.where('tariff_date', tariffDate)
+		.orderBy('box_delivery_coef_expr', 'asc')
+}
