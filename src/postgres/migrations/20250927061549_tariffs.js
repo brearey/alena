@@ -5,6 +5,9 @@
 export async function up(knex) {
   return knex.schema.createTable('tariffs', (table) => {
     table.increments('id').primary();
+		table.string('dt_next_box').comment('Дата начала следующего тарифа');
+		table.string('dt_till_max').comment('Дата окончания последнего установленного тарифа');
+
     table.decimal('box_delivery_base', 10, 2).comment('Логистика, первый литр, ₽');
     table.string('box_delivery_coef_expr').comment('Коэффициент Логистика, %');
     table.decimal('box_delivery_liter', 10, 2).comment('Логистика, дополнительный литр, ₽');

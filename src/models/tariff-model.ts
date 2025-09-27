@@ -18,11 +18,15 @@ interface WarehouseData {
 
 interface TariffsResponse {
 	data: {
+		dtNextBox: string
+		dtTillMax: string
 		warehouseList: WarehouseData[]
 	}
 }
 
 interface TariffDBRecord {
+	dt_next_box: string
+	dt_till_max: string
 	warehouse_name: string
 	geo_name: string
 	box_delivery_base: number
@@ -47,10 +51,12 @@ export async function saveTariffs(
 	tariffsData: TariffsResponse,
 	tariffDate: string
 ) {
-	const { warehouseList } = tariffsData.data
+	const { dtNextBox, dtTillMax, warehouseList } = tariffsData.data
 
 	const tariffsToInsert: TariffDBRecord[] = warehouseList.map(
 		(warehouse: WarehouseData) => ({
+			dt_next_box: dtNextBox,
+			dt_till_max: dtTillMax,
 			warehouse_name: warehouse.warehouseName,
 			geo_name: warehouse.geoName,
 			box_delivery_base: parseDecimal(warehouse.boxDeliveryBase),
