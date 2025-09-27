@@ -12,13 +12,25 @@ app.get('/health', (req, res) => {
 	res.send('ok')
 })
 
+// for check in browser
+app.get('/tariffs', (req, res) => {
+	const currentDate = new Date().toLocaleDateString('en-CA')
+	fetchTariffs(currentDate)
+		.then((data) => {
+			res.json(data)
+		})
+		.catch((e) => console.error('fetchTariffs', e))
+})
+
 app.listen(port, async () => {
 	await migrate.latest()
 	await seed.run()
 	console.log('All migrations and seeds have been run')
 
-	// Plan a fetching tariffs function
-	plan(fetchTariffsHandler)
+	// // fetch on start app
+	// fetchTariffsHandler()
+	// // Plan a fetching tariffs function
+	// plan(fetchTariffsHandler)
 
 	console.log(`App listening on port ${port} at ${new Date().toLocaleString()}`)
 })
@@ -31,7 +43,7 @@ function fetchTariffsHandler() {
 	fetchTariffs(currentDate)
 		.then((data) => {
 			saveTariffs(data.response, currentDate)
-				.then((result) => console.log('saveTariffs success'))
+				.then(() => console.log('saveTariffs success'))
 				.catch((e) => console.error('saveTariffs', e))
 		})
 		.catch((e) => console.error('fetchTariffs', e))
