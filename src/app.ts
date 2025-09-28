@@ -4,6 +4,7 @@ import env from './config/env/env.js'
 import { fetchTariffs } from '#services/tariffs-service.js'
 import { readSpreadsheet } from '#services/sheets-service.js'
 import { saveTariffs } from '#models/tariff-model.js'
+import { getSheetsIds } from '#models/sheets-model.js'
 import { plan } from '#utils/scheduler.js'
 
 const app = express()
@@ -27,11 +28,14 @@ app.get('/tariffs', (req, res) => {
 })
 
 app.get('/sheets', (req, res) => {
-	readSpreadsheet(env.SPREADSHEET_ID)
-		.then((result) => {
-			res.json(result)
-		})
-		.catch(e => console.error('readSpreadsheet', e))
+	getSheetsIds()
+		.then(result => res.json(result))
+		.catch(e => console.error('getSheetsIds', e))
+	// readSpreadsheet(env.SPREADSHEET_ID)
+	// 	.then((result) => {
+	// 		res.json(result)
+	// 	})
+	// 	.catch(e => console.error('readSpreadsheet', e))
 })
 
 app.listen(port, async () => {
