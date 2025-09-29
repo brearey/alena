@@ -6,6 +6,7 @@ import { readSpreadsheet } from '#services/sheets-service.js'
 import { saveTariffs } from '#models/tariff-model.js'
 import { getSheetsIds } from '#models/sheets-model.js'
 import { plan } from '#utils/scheduler.js'
+import { listMajors } from '#quickstart.js'
 
 const app = express()
 const port = env.APP_PORT
@@ -28,9 +29,15 @@ app.get('/tariffs', (req, res) => {
 })
 
 app.get('/sheets', (req, res) => {
-	getSheetsIds()
+	listMajors()
 		.then(result => res.json(result))
-		.catch(e => console.error('getSheetsIds', e))
+		.catch(e => {
+			console.error('listMajors', e)
+			res.status(500)
+		})
+	// getSheetsIds()
+	// 	.then(result => res.json(result))
+	// 	.catch(e => console.error('getSheetsIds', e))
 	// readSpreadsheet(env.SPREADSHEET_ID)
 	// 	.then((result) => {
 	// 		res.json(result)
